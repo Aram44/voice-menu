@@ -1,0 +1,157 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Voice menu page</title>
+<style>
+.menu {
+  background:url("menu.png") #fff no-repeat center center;
+  width: 58px;
+  height: 58px;
+  display: block;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  border:none; 
+}
+.grid {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 50em;
+  width: 90%;
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.75;
+  margin: 0;
+  min-height: 100%;
+  background-color:#fafafa;
+}
+
+.header {
+  background-color: #ac03aa;
+  padding-bottom: 2em;
+  padding-left: 5em;
+  padding-top: 1em;
+}
+
+
+.header::after {
+  bottom: 0;
+  box-shadow: 0 0.0625em 0.5em rgba(0, 0, 0, .3);
+  content: '';
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  z-index: -1;
+}
+
+.header.is-active::after {
+  opacity: 1;
+}
+
+h1 {
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+
+.navigation a {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.navigation .is-active {
+  background-color: #000;
+  color: #fff;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-radius: 999px;
+}
+
+.navigation__list {
+  list-style: none;
+  margin: -0.5em;
+  padding: 0;
+}
+
+.navigation__list--inline {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.navigation__item {
+  margin-top: 0.8em;
+  margin-left: 0.8em;
+}
+
+h3 {
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
+}</style>
+</head>
+
+<body>
+<header class="header">
+    <nav class="navigation">
+      <ul class="navigation__list navigation__list--inline">
+        <li class="navigation__item"><a href="index.html">Home</a></li>
+        <li class="navigation__item"><a href="about.html">About</a></li>
+        <li class="navigation__item"><a href="contact.html">Contact</a></li>
+        <li class="navigation__item"><a href="blog.html" class="is-active">Blog</a></li>
+      </ul>
+    </nav>
+</header>
+<button class="menu" onclick="speech ()"></button>
+  <div class="grid">
+    <h1>This is Voic menu for page</h1>
+    <h3>This is page blog</h3>
+    <h3>To use the menu, press the button and say the menu item name. Example contact</h3>
+  </div>
+<script>
+ 
+  var recognizer = new webkitSpeechRecognition();
+
+ 
+  recognizer.interimResults = true;
+
+  recognizer.lang = 'en-En';
+
+  recognizer.onresult = function (event) {
+    var result = event.results[event.resultIndex];
+    if (result[0].transcript=="home") {
+      window.location="index.html"}
+    else if (result[0].transcript=="about") {
+      window.location="about.html"}
+    else if (result[0].transcript=="contact") {
+      window.location="contact.html"}
+    else if (result[0].transcript=="blog") {
+      window.location="blog.html"}
+    else if(result.isFinal && result[0].transcript!="Google"){
+          alert('text: ' + result[0].transcript);
+    } else {
+      console.log('sesult: ', result[0].transcript);
+    }
+  };
+
+  function speech () {
+    recognizer.start();
+  }
+
+  </script>
+</body>
+</html>
